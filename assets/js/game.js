@@ -200,7 +200,7 @@ var shop = function() {
     );
     
     // use switch to carry out the action
-    switch (shopOptionPrompt) {ush 
+    switch (shopOptionPrompt) { 
         case "REFILL":
         case "refill":
             playerInfo.refillHealth();
