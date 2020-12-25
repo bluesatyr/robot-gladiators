@@ -79,6 +79,48 @@ var fight = function(enemy) {
 
     // remove enemy's health by subtracting the amount we set in the damage variable
     enemy.health = Math.max(0, enemy.health - damage);
+
+var fightOrSkip = function() {
+  // ask player if they'd like to fight or skip using fightOrSkip function
+    var promptFight = window.prompt('Would you like FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
+    promptFight = promptFight.toLowerCase();
+  // Conditional Recursive Function Call
+    if (promptFight === "" || promptFight === null) {
+        window.alert("You need to provide a valid answer! Please try again.");
+        return fightOrSkip();
+    }
+
+  // if player picks "skip" confirm and then stop the loop
+  if (promptFight === "skip" || promptFight === "SKIP") {
+    // confirm player wants to skip
+    var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+    // if yes (true), leave fight
+    if (confirmSkip) {
+      window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+      // subtract money from playerMoney for skipping, but don't let them go into the negative
+      playerInfo.money = Math.max(0, playerInfo.money - 10);
+
+      // return true if player wants to leave
+      return true;
+    }
+    //else {return;}
+  }
+    return false;
+}
+// fight function (now with parameter for enemy's name)
+var fight = function(enemy) {
+  console.log(enemy);
+  while (playerInfo.health > 0 && enemy.health > 0) {
+    // ask player if they'd like to fight or skip using fightOrSkip function
+    if (fightOrSkip()) {
+      // if true, leave fight by breaking loop
+      break;
+    }
+    // remove enemy's health by subtracting the amount set in the playerInfo.attack variable
+    var damage = randomNumber(playerInfo.attack -3, playerInfo.attack);
+    enemy.health = Math.max(0, enemy.health - damage); // equals the larger of 0 or enemy.health - playerInfo.attack
+
     console.log(
       playerInfo.name +
         ' attacked ' +
@@ -213,7 +255,6 @@ var enemyInfo = [
     attack: randomNumber(10, 14)
   }
 ];
-
 console.log(enemyInfo);
 console.log(enemyInfo[0]);
 console.log(enemyInfo[0].name);
